@@ -4,7 +4,7 @@ import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
 
-public class ChessPiece extends Piece {
+public abstract class ChessPiece extends Piece {
 	private Color color;
 	
 	public Color getColor() {
@@ -27,4 +27,5 @@ public class ChessPiece extends Piece {
 	protected void decreaseMoveCount() {
 		
 	}
+	
 }
