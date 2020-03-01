@@ -31,7 +31,6 @@ public class King extends ChessPiece {
 		scanPos.setValues(this.position.getRow() - 1, this.position.getColumn() + 1);
 		if (getBoard().positionExists(scanPos) && canMove(scanPos))
 			matPossibleMoves[scanPos.getRow()][scanPos.getColumn()] = true;
-		 
 
 		// East
 		scanPos.setValues(this.position.getRow(), this.position.getColumn() + 1);
