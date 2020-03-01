@@ -9,9 +9,21 @@ import exceptions.ChessException;
 
 public class ChessMatch {
 	private Board board;
-
+	private int turn;
+	private Color currentPLayer;
+	
+	public int getTurn() {
+		return turn;
+	}
+	
+	public Color getCurrentPLayer() {
+		return currentPLayer;
+	}
+	
 	public ChessMatch() {
 		this.board = new Board(8, 8);
+		this.turn = 1;
+		this.currentPLayer = Color.WHITE;
 		this.initialSetup();
 	}
 	
@@ -40,6 +52,8 @@ public class ChessMatch {
 		this.validatePosition(source);
 		this.validateTargetPosition(source, target);
 		
+		nextTurn();
+
 		Piece capturedPiece = this.makeMove(source, target);
 		return (ChessPiece)capturedPiece;
 	}
@@ -54,9 +68,13 @@ public class ChessMatch {
 	private void validatePosition(Position position) {
 		if (!this.board.thereIsAPiece(position))
 			throw new ChessException("There is no piece on this position");
+
+		if (this.currentPLayer != ((ChessPiece)board.piece(position)).getColor())
+			throw new ChessException("The chosen piece is not yours");
 		
 		if (!this.board.piece(position).isThereAnyPossibleMove())
 			throw new ChessException("There is no possible movies for the chosen piece");
+		
 	}
 	
 	private void validateTargetPosition(Position source, Position target) {
@@ -64,6 +82,11 @@ public class ChessMatch {
 			throw new ChessException("The chosen piece can't move to target position");
 	}
 
+	private void nextTurn() {
+		this.turn ++;
+		this.currentPLayer = this.currentPLayer == Color.WHITE ? Color.BLACK : Color.WHITE;
+	}
+	
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
 		this.board.placePiece(piece, new ChessPosition(column, row).toPosition());
 	}
