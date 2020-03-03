@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import chess.ChessMatch;
@@ -92,6 +93,8 @@ public class UI {
 		System.out.println();
 		System.out.println("Turn: " + chessMatch.getTurn());
 		System.out.println("Waiting player: " + chessMatch.getCurrentPLayer());
+		if (chessMatch.getCheck())
+			System.out.println("CHECK!");
 	}
 	
 	public static void clearScreen() {
@@ -99,14 +102,15 @@ public class UI {
 		System.out.flush();
 	}
 	
-	private static void printCapturedPieces(List<ChessPiece> listPiece) {
-		List<ChessPiece> listWhite = listPiece.stream().filter(x -> x.getColor() == Color.WHITE).collect(Collectors.toList());
-		List<ChessPiece> listBlack = listPiece.stream().filter(x -> x.getColor() == Color.BLACK).collect(Collectors.toList());
-		
-		System.out.println("Captured pieces: ");
-		System.out.print("White: ");
-		System.out.println(Arrays.toString(listWhite.toArray()));
-		System.out.print("Black: ");
-		System.out.println(Arrays.toString(listBlack.toArray()));
+	private static void printCapturedPieces(List<ChessPiece> listCaptured) {
+			Predicate<ChessPiece> whiteFilter = piece -> piece.getColor() == Color.WHITE;
+			Predicate<ChessPiece> blackFilter = piece -> piece.getColor() == Color.BLACK;
+			List<ChessPiece> listWhite = listCaptured.stream().filter(whiteFilter).collect(Collectors.toList());
+			List<ChessPiece> listBlack = listCaptured.stream().filter(blackFilter).collect(Collectors.toList());
+			System.out.println("Captured pieces:");
+			System.out.print("White: ");
+			System.out.println(Arrays.toString(listWhite.toArray()));
+			System.out.print("Black: ");
+			System.out.println(Arrays.toString(listBlack.toArray()));
 	}
 }

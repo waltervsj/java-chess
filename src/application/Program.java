@@ -26,7 +26,7 @@ public class Program {
 				ChessPosition sourcePosition = UI.readChessPosition(sc);
 				
 				boolean[][] possibleMoves = chessMatch.possibleMoves(sourcePosition);
-				UI.clearScreen();
+				//UI.clearScreen();
 				UI.printBoard(chessMatch.getPieces(), possibleMoves);
 				
 				System.out.println();
@@ -34,7 +34,8 @@ public class Program {
 				ChessPosition targetPosition = UI.readChessPosition(sc);
 				
 				ChessPiece capturedPiece = chessMatch.performChessMove(sourcePosition, targetPosition);
-				listCaptured.add(capturedPiece);
+				if (capturedPiece != null) 
+					listCaptured.add(capturedPiece);
 				
 			} catch(ChessException e) {
 				System.out.println(e.getMessage());
